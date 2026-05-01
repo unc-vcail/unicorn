@@ -1,0 +1,39 @@
+# Core deep learning
+torch>=2.0.0
+torchvision>=0.15.0
+pytorch-lightning>=2.0.0
+
+# Config / serialisation
+omegaconf>=2.1.1
+safetensors>=0.2.7
+
+# Vision & image processing
+opencv-python>=4.7.0
+Pillow>=9.0.0
+scikit-image>=0.20.0
+scipy>=1.10.0
+einops>=0.6.1
+timm>=0.6.12
+
+# Text / CLIP
+transformers>=4.19.2
+open-clip-torch>=2.0.2
+
+# Metrics & logging
+torchmetrics
+basicsr>=1.4.2
+tqdm
+
+# Data augmentation (datagen only)
+imgaug>=0.4.0
+
+# GPU-accelerated cue extraction (optional — falls back to CPU automatically)
+# cupy-cuda11x   # for CUDA 11.x
+# cupy-cuda12x   # for CUDA 12.x
+
+# Caption generation (optional — only needed if generate_captions=True in datagen)
+# clip-interrogator
+
+# Source installs required for LDM / VQGAN components
+-e git+https://github.com/CompVis/taming-transformers.git@master#egg=taming-transformers
+-e git+https://github.com/openai/CLIP.git@dcba3cb2e2827b402d2701e7e1c7d9fed8a20ef1#egg=clip
