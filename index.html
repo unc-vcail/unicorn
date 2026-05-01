@@ -2,35 +2,17 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="All-in-one restoration removes simultaneous degradations from real world metalens images.">
-  <meta name="keywords" content="All-in-one, Metalens, Restoration">
+  <meta name="description" content="UniCoRN: Latent Diffusion-based Unified Controllable Image Restoration Network across Multiple Degradations">
+  <meta name="keywords" content="Image Restoration, Diffusion Models, ControlNet, All-in-one, Metalens">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UniCoRN: Unified Controllable Restoration Network for all-in-one metalens images</title>
+  <title>UniCoRN: Unified Controllable Image Restoration</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.svg">
 
@@ -39,6 +21,23 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
+  <style>
+    /* Uniform slide containers — images fill the box, letterboxed if needed */
+    .image-carousel .carousel-item,
+    .image-carousel .item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-slide-img {
+      width: 100%;
+      height: 480px;
+      object-fit: contain;
+      background: #000;
+      display: block;
+    }
+  </style>
 </head>
 <body>
 
@@ -52,33 +51,13 @@
   </div>
   <div class="navbar-menu">
     <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
+        <a class="navbar-link">More Research</a>
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="#">
-            Coming Soon.
-          </a>
-          <!-- <a class="navbar-item" href="https://nerfies.github.io">
-            Nerfies
-          </a>
-          <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
-          </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
-          </a> -->
+          <a class="navbar-item" href="#">Coming Soon.</a>
         </div>
       </div>
     </div>
-
   </div>
 </nav>
 
@@ -88,86 +67,38 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">UniCoRN: Unified Controllable Restoration Network for all-in-one metalens images</h1>
+          <h1 class="title is-1 publication-title">UniCoRN: Latent Diffusion-based Unified Controllable Image Restoration Network across Multiple Degradations</h1>
           <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://codejaeger.github.io/">Debabrata Mandal</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://soumitri2001.github.io/">Soumitri Chattopadhyay </a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="#">Guansen Tong</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://www.cs.unc.edu/~cpk/">Praneeth Chakravarthula</a><sup>1</sup>,
-            </span>
-            <!-- <span class="author-block">
-              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
-            </span> -->
+            <span class="author-block"><a href="https://codejaeger.github.io/">Debabrata Mandal</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://soumitri2001.github.io/">Soumitri Chattopadhyay</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="#">Guansen Tong</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://www.cs.unc.edu/~cpk/">Praneeth Chakravarthula</a><sup>1</sup></span>
           </div>
-
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup>1</sup>University of North Carolina, Chapel Hill</span>
-            <!-- <span class="author-block"><sup>2</sup>Google Research</span> -->
           </div>
 
           <div class="column has-text-centered">
             <div class="publication-links">
-              <!-- PDF Link. -->
               <span class="link-block">
-                <a href="#"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
+                <a href="https://arxiv.org/abs/2503.15868" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2503.15868" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
                   <span>Paper</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="#"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Video Link. -->
-              <span class="link-block">
-                <a href="#"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
-                  <span>Video</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="#"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
+                <a href="https://github.com/unc-vcail/unicorn" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
                   <span>Code</span>
-                  </a>
+                </a>
               </span>
-              <!-- Dataset Link. -->
-              <span class="link-block">
-                <a href="#"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="far fa-images"></i>
-                  </span>
-                  <span>Data</span>
-                  </a>
             </div>
-
           </div>
         </div>
       </div>
@@ -175,175 +106,169 @@
   </div>
 </section>
 
+
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
-      <h2 class="subtitle has-text-centered">
-        <span class="dnerf">UniCoRN</span> for all-in-one restoration
-        from simultaneous unknown
-        metalens degradations.
+      <img src="./static/images/unicorn_assets/teaser.png" alt="UniCoRN teaser" style="width:100%;">
+      <h2 class="subtitle has-text-centered" style="margin-top:1rem;">
+        <span class="dnerf">UniCoRN</span> restores images corrupted by unknown, co-existing degradations in a single forward pass — without requiring prior knowledge of the corruption type.
       </h2>
     </div>
   </div>
 </section>
 
 
-<!-- <section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-
-
 <section class="section">
   <div class="container is-max-desktop">
-    <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We present the a novel all-in-one controllable diffusion method capable of photorealistic
-            reconstruction from severe metalens degraded images for ultra-light compact imaging devices.
+            We present <b>UniCoRN</b>, a unified image restoration model that handles multiple simultaneous degradations — blur, haze, noise, and low-light — without requiring prior knowledge of the corruption type. Built on Stable Diffusion v1.5, it conditions a frozen diffusion backbone through a novel multi-head control network driven by cheap, task-agnostic low-level visual cues extracted directly from the degraded input.
           </p>
           <p>
-            <!-- Our approach augments neural radiance fields
-            (NeRF) by optimizing an
-            additional continuous volumetric deformation field that warps each observed point into a
-            canonical 5D NeRF.
-            We observe that these NeRF-like deformation fields are prone to local minima, and
-            propose a coarse-to-fine optimization method for coordinate-based models that allows for
-            more robust optimization.
-            By adapting principles from geometry processing and physical simulation to NeRF-like
-            models, we propose an elastic regularization of the deformation field that further
-            improves robustness. -->
-          </p>
-          <p>
-            <!-- We show that <span class="dnerf">Nerfies</span> can turn casually captured selfie
-            photos/videos into deformable NeRF
-            models that allow for photorealistic renderings of the subject from arbitrary
-            viewpoints, which we dub <i>"nerfies"</i>. We evaluate our method by collecting data
-            using a
-            rig with two mobile phones that take time-synchronized photos, yielding train/validation
-            images of the same pose at different viewpoints. We show that our method faithfully
-            reconstructs non-rigidly deforming scenes and reproduces unseen views with high
-            fidelity. -->
+            UniCoRN features a <b>Multi-Level Condition Network (MLCN)</b> that fuses task-specific image estimates with secondary cues (transmission maps, edge maps, color maps) at multiple scales, a <b>Task Stabilizer Unit (TSU)</b> that stabilises gradient flow during curriculum training, and a <b>Task-aware MoE Adapter</b> that blends per-degradation control signals conditioned on CLIP text embeddings. We also introduce the <b>MetaRestore</b> benchmark — a real-world dataset captured with a metalens camera exhibiting compound degradations — and demonstrate 3–5× faster inference than diffusion-based baselines while matching or exceeding their quality.
           </p>
         </div>
       </div>
     </div>
-    <!--/ Abstract. -->
-
-    <!-- Paper video. -->
-    <!-- <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div> -->
-    <!--/ Paper video. -->
   </div>
 </section>
 
-<!-- PUT STUFF FROM EXTRA.HTML IN THIS SPACE-->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method Overview</h2>
+    <div class="content has-text-centered">
+      <img src="./static/images/unicorn_assets/overview_figure.png" alt="UniCoRN architecture overview" style="width:100%;">
+    </div>
+    <div class="content has-text-justified" style="margin-top:1rem;">
+      <p>
+        UniCoRN extends ControlNet with four components: (1) a multi-branch MLCN encoder that fuses primary and secondary low-level cues at multiple spatial scales using NAFBlocks, (2) shared multi-head control paths — one per degradation type — all sharing a frozen SD1.5 UNet backbone, (3) the TSU residual block inserted between every pair of control encoder layers, and (4) a separable convolutional MoE adapter that injects blended control signals into the frozen UNet at each resolution.
+      </p>
+    </div>
+
+    <h3 class="title is-4 has-text-centered" style="margin-top:2rem;">Low-Level Cue Visualisation</h3>
+    <div class="content has-text-centered">
+      <img src="./static/images/unicorn_assets/low_level_cues_visualize.png" alt="Low-level cue visualisation" style="width:100%;">
+    </div>
+    <div class="content has-text-justified" style="margin-top:0.5rem;">
+      <p>
+        Dark-channel transmission maps, shock-filtered edge maps, and colour/gradient cues serve as control signals — replacing unreliable semantic prompts and enabling the model to identify degradation type from the image itself.
+      </p>
+    </div>
+
+    <h3 class="title is-4 has-text-centered" style="margin-top:2rem;">Pilot Study</h3>
+    <div class="content has-text-centered">
+      <img src="./static/images/unicorn_assets/pilot_study.png" alt="Pilot study" style="width:100%;">
+    </div>
+  </div>
+</section>
 
 
-<!-- <section class="section" id="BibTeX">
+<section class="section" style="background-color:#f5f5f5;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">MetaRestore Benchmark</h2>
+
+    <div class="columns is-centered" style="margin-bottom:1.5rem;">
+      <div class="column is-half has-text-centered">
+        <img src="./static/images/unicorn_assets/metalens_sem_image.png" alt="SEM image of the metalens" style="width:100%;">
+        <p class="is-size-7 has-text-centered" style="margin-top:0.5rem;">SEM image of the metalens optic.</p>
+      </div>
+      <div class="column is-half has-text-centered">
+        <img src="./static/images/unicorn_assets/metarestore_data_capture_process.png" alt="MetaRestore data capture process" style="width:100%;">
+        <p class="is-size-7 has-text-centered" style="margin-top:0.5rem;">Data capture: metalens camera 1 m from an LCD display.</p>
+      </div>
+    </div>
+
+    <h3 class="title is-4 has-text-centered">Zero-Shot Qualitative Results</h3>
+    <div class="image-carousel" id="carousel-metalens-zeroshot">
+      <div class="item-1">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/metalens_results_zeroshot_1.png" alt="MetaRestore zero-shot results 1">
+      </div>
+      <div class="item-2">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/metalens_results_zeroshot_2.png" alt="MetaRestore zero-shot results 2">
+      </div>
+    </div>
+
+    <h3 class="title is-4 has-text-centered" style="margin-top:2.5rem;">Fine-Tuned Results</h3>
+    <div class="content has-text-centered">
+      <img src="./static/images/unicorn_assets/metalens_results_finetuned.png" alt="MetaRestore fine-tuned results" style="width:100%;">
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Single-Degradation Results</h2>
+    <div class="content has-text-centered" style="margin-bottom:1.5rem;">
+      <img src="./static/images/unicorn_assets/single_restoration_results_main.png" alt="Single restoration quantitative results" style="width:100%;">
+    </div>
+    <div class="image-carousel" id="carousel-single-restore">
+      <div class="item-1">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/single_restore_1.png" alt="Single restoration qualitative 1">
+      </div>
+      <div class="item-2">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/single_restore_2.png" alt="Single restoration qualitative 2">
+      </div>
+      <div class="item-3">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/single_restore_3.png" alt="Single restoration qualitative 3">
+      </div>
+      <div class="item-4">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/single_restore_4.png" alt="Single restoration qualitative 4">
+      </div>
+      <div class="item-5">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/single_restore_5.png" alt="Single restoration qualitative 5">
+      </div>
+      <div class="item-6">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/sinle_restore_6.png" alt="Single restoration qualitative 6">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" style="background-color:#f5f5f5;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Mixed-Degradation Results</h2>
+    <div class="image-carousel" id="carousel-mixed-restore">
+      <div class="item-1">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/mixed_restore_1.png" alt="Mixed degradation results 1">
+      </div>
+      <div class="item-2">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/mixed_restore_2.png" alt="Mixed degradation results 2">
+      </div>
+      <div class="item-3">
+        <img class="carousel-slide-img" src="./static/images/unicorn_assets/mixed_restore_3.png" alt="Mixed degradation results 3">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{park2021nerfies,
-  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
-  title     = {Nerfies: Deformable Neural Radiance Fields},
-  journal   = {ICCV},
-  year      = {2021},
+    <pre><code>@article{mandal2025unicorn,
+  title   = {UniCoRN: Latent Diffusion-based Unified Controllable Image Restoration Network across Multiple Degradations},
+  author  = {Mandal, Debabrata and Chattopadhyay, Soumitri and Tong, Guansen and Chakravarthula, Praneeth},
+  journal = {arXiv preprint arXiv:2503.15868},
+  year    = {2025}
 }</code></pre>
   </div>
-</section> -->
+</section>
 
 
 <footer class="footer">
   <div class="container">
-    <div class="content has-text-centered">
-      <!-- <a class="icon-link"
-         href="./static/videos/nerfies_paper.pdf">
-        <i class="fas fa-file-pdf"></i>
-      </a> -->
-      <!-- <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a> -->
-    </div>
     <div class="columns is-centered">
       <div class="column is-8">
-        <div class="content">
+        <div class="content has-text-centered">
           <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
+            Website template from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
           </p>
         </div>
       </div>
