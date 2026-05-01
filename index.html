@@ -23,20 +23,68 @@
   <script src="./static/js/index.js"></script>
 
   <style>
-    /* Uniform slide containers — images fill the box, letterboxed if needed */
-    .image-carousel .carousel-item,
-    .image-carousel .item {
+    /* ── Custom image carousel ── */
+    .unicorn-carousel {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      background: #111;
+    }
+    .unicorn-carousel-track {
+      display: flex;
+      transition: transform 0.4s ease;
+    }
+    .unicorn-carousel-slide {
+      min-width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .carousel-slide-img {
+    .unicorn-carousel-slide img {
       width: 100%;
-      height: 480px;
+      max-height: 520px;
       object-fit: contain;
-      background: #000;
       display: block;
     }
+    .unicorn-carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 0 6px;
+      background: #fff;
+    }
+    .unicorn-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background 0.2s;
+      border: none;
+      padding: 0;
+    }
+    .unicorn-dot.active { background: #363636; }
+    .unicorn-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-60%);
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      border: none;
+      font-size: 2rem;
+      width: 2.4rem;
+      height: 3.5rem;
+      cursor: pointer;
+      z-index: 10;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .unicorn-nav-btn:hover { background: rgba(0,0,0,0.75); }
+    .unicorn-prev { left: 6px; }
+    .unicorn-next { right: 6px; }
   </style>
 </head>
 <body>
@@ -54,7 +102,7 @@
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">More Research</a>
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="#">Coming Soon.</a>
+          <a class="navbar-item" href="https://codejaeger.github.io/research/">Research Page</a>
         </div>
       </div>
     </div>
@@ -76,6 +124,11 @@
           </div>
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup>1</sup>University of North Carolina, Chapel Hill</span>
+          </div>
+
+          <div class="is-size-5 publication-authors" style="margin-top:0.5rem;">
+            <span class="tag is-danger is-medium" style="font-weight:600; border-radius:4px; margin-right:0.4rem;">WACV 2026</span>
+            <span class="tag is-warning is-medium" style="font-weight:600; border-radius:4px;">Oral Presentation</span>
           </div>
 
           <div class="column has-text-centered">
@@ -174,26 +227,38 @@
 
     <div class="columns is-centered" style="margin-bottom:1.5rem;">
       <div class="column is-half has-text-centered">
-        <img src="./static/images/unicorn_assets/metalens_sem_image.png" alt="SEM image of the metalens" style="width:100%;">
-        <p class="is-size-7 has-text-centered" style="margin-top:0.5rem;">SEM image of the metalens optic.</p>
+        <div style="height:300px; display:flex; align-items:center; justify-content:center; background:#f0f0f0; border-radius:4px;">
+          <img src="./static/images/unicorn_assets/metalens_sem_image.png" alt="SEM image of the metalens" style="max-width:100%; max-height:300px; object-fit:contain;">
+        </div>
+        <p class="is-size-7" style="margin-top:0.5rem;">SEM image of the metalens optic.</p>
       </div>
       <div class="column is-half has-text-centered">
-        <img src="./static/images/unicorn_assets/metarestore_data_capture_process.png" alt="MetaRestore data capture process" style="width:100%;">
-        <p class="is-size-7 has-text-centered" style="margin-top:0.5rem;">Data capture: metalens camera 1 m from an LCD display.</p>
+        <div style="height:300px; display:flex; align-items:center; justify-content:center; background:#f0f0f0; border-radius:4px;">
+          <img src="./static/images/unicorn_assets/metarestore_data_capture_process.png" alt="MetaRestore data capture process" style="max-width:100%; max-height:300px; object-fit:contain;">
+        </div>
+        <p class="is-size-7" style="margin-top:0.5rem;">Data capture: metalens camera 1 m from an LCD display.</p>
       </div>
     </div>
 
     <h3 class="title is-4 has-text-centered">Zero-Shot Qualitative Results</h3>
-    <div class="image-carousel" id="carousel-metalens-zeroshot">
-      <div class="item-1">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/metalens_results_zeroshot_1.png" alt="MetaRestore zero-shot results 1">
+    <div class="unicorn-carousel" style="margin-bottom:2rem;">
+      <div class="unicorn-carousel-track">
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/metalens_results_zeroshot_1.png" alt="MetaRestore zero-shot results 1">
+        </div>
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/metalens_results_zeroshot_2.png" alt="MetaRestore zero-shot results 2">
+        </div>
       </div>
-      <div class="item-2">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/metalens_results_zeroshot_2.png" alt="MetaRestore zero-shot results 2">
+      <button class="unicorn-nav-btn unicorn-prev">&#8249;</button>
+      <button class="unicorn-nav-btn unicorn-next">&#8250;</button>
+      <div class="unicorn-carousel-dots">
+        <button class="unicorn-dot active"></button>
+        <button class="unicorn-dot"></button>
       </div>
     </div>
 
-    <h3 class="title is-4 has-text-centered" style="margin-top:2.5rem;">Fine-Tuned Results</h3>
+    <h3 class="title is-4 has-text-centered">Fine-Tuned Results</h3>
     <div class="content has-text-centered">
       <img src="./static/images/unicorn_assets/metalens_results_finetuned.png" alt="MetaRestore fine-tuned results" style="width:100%;">
     </div>
@@ -207,24 +272,36 @@
     <div class="content has-text-centered" style="margin-bottom:1.5rem;">
       <img src="./static/images/unicorn_assets/single_restoration_results_main.png" alt="Single restoration quantitative results" style="width:100%;">
     </div>
-    <div class="image-carousel" id="carousel-single-restore">
-      <div class="item-1">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/single_restore_1.png" alt="Single restoration qualitative 1">
+    <div class="unicorn-carousel">
+      <div class="unicorn-carousel-track">
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/single_restore_1.png" alt="Single restoration qualitative 1">
+        </div>
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/single_restore_2.png" alt="Single restoration qualitative 2">
+        </div>
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/single_restore_3.png" alt="Single restoration qualitative 3">
+        </div>
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/single_restore_4.png" alt="Single restoration qualitative 4">
+        </div>
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/single_restore_5.png" alt="Single restoration qualitative 5">
+        </div>
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/sinle_restore_6.png" alt="Single restoration qualitative 6">
+        </div>
       </div>
-      <div class="item-2">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/single_restore_2.png" alt="Single restoration qualitative 2">
-      </div>
-      <div class="item-3">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/single_restore_3.png" alt="Single restoration qualitative 3">
-      </div>
-      <div class="item-4">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/single_restore_4.png" alt="Single restoration qualitative 4">
-      </div>
-      <div class="item-5">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/single_restore_5.png" alt="Single restoration qualitative 5">
-      </div>
-      <div class="item-6">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/sinle_restore_6.png" alt="Single restoration qualitative 6">
+      <button class="unicorn-nav-btn unicorn-prev">&#8249;</button>
+      <button class="unicorn-nav-btn unicorn-next">&#8250;</button>
+      <div class="unicorn-carousel-dots">
+        <button class="unicorn-dot active"></button>
+        <button class="unicorn-dot"></button>
+        <button class="unicorn-dot"></button>
+        <button class="unicorn-dot"></button>
+        <button class="unicorn-dot"></button>
+        <button class="unicorn-dot"></button>
       </div>
     </div>
   </div>
@@ -234,15 +311,24 @@
 <section class="section" style="background-color:#f5f5f5;">
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Mixed-Degradation Results</h2>
-    <div class="image-carousel" id="carousel-mixed-restore">
-      <div class="item-1">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/mixed_restore_1.png" alt="Mixed degradation results 1">
+    <div class="unicorn-carousel">
+      <div class="unicorn-carousel-track">
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/mixed_restore_1.png" alt="Mixed degradation results 1">
+        </div>
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/mixed_restore_2.png" alt="Mixed degradation results 2">
+        </div>
+        <div class="unicorn-carousel-slide">
+          <img src="./static/images/unicorn_assets/mixed_restore_3.png" alt="Mixed degradation results 3">
+        </div>
       </div>
-      <div class="item-2">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/mixed_restore_2.png" alt="Mixed degradation results 2">
-      </div>
-      <div class="item-3">
-        <img class="carousel-slide-img" src="./static/images/unicorn_assets/mixed_restore_3.png" alt="Mixed degradation results 3">
+      <button class="unicorn-nav-btn unicorn-prev">&#8249;</button>
+      <button class="unicorn-nav-btn unicorn-next">&#8250;</button>
+      <div class="unicorn-carousel-dots">
+        <button class="unicorn-dot active"></button>
+        <button class="unicorn-dot"></button>
+        <button class="unicorn-dot"></button>
       </div>
     </div>
   </div>
@@ -267,9 +353,7 @@
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content has-text-centered">
-          <p>
-            Website template from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
-          </p>
+          <p>Website template from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.</p>
         </div>
       </div>
     </div>
