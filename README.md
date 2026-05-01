@@ -11,6 +11,8 @@ University of North Carolina at Chapel Hill
 
 ![UniCoRN teaser](assets/teaser.png)
 
+*For full qualitative results and supplementary figures, see the [project page](https://codejaeger.github.io/unicorn-gh).*
+
 > **UniCoRN** is a unified image restoration model that handles multiple simultaneous degradations — blur, haze, noise, and low-light — without requiring prior knowledge of the corruption type. Built on Stable Diffusion v1.5, it conditions a frozen diffusion backbone through a novel multi-head control network driven by cheap, task-agnostic low-level visual cues extracted directly from the degraded input.
 
 ---
@@ -30,8 +32,6 @@ University of North Carolina at Chapel Hill
 
 ### MetaRestore benchmark (zero-shot)
 
-![MetaRestore qualitative](assets/metarestore_qual.png)
-
 | Method | PSNR ↑ | SSIM ↑ | LPIPS ↓ | NIQE ↓ | BRISQUE ↓ |
 |---|---|---|---|---|---|
 | AirNet | 12.69 | 0.341 | 0.62 | 29.57 | 39.96 |
@@ -43,8 +43,6 @@ University of North Carolina at Chapel Hill
 
 ### Mixed degradation datasets
 
-![Mixed degradation results](assets/mixed_deg_qual.png)
-
 | Method | Blur+Haze PSNR ↑ | SSIM ↑ | LPIPS ↓ | Noise+Blur PSNR ↑ | SSIM ↑ | LPIPS ↓ | Low+Blur PSNR ↑ | SSIM ↑ | LPIPS ↓ |
 |---|---|---|---|---|---|---|---|---|---|
 | AutoDIR | 12.97 | 0.394 | 0.577 | 17.97 | 0.475 | 0.443 | 18.32 | 0.662 | 0.304 |
@@ -54,8 +52,6 @@ University of North Carolina at Chapel Hill
 | **UniCoRN (ours)** | **28.83** | **0.673** | **0.212** | **28.55** | **0.717** | **0.162** | **28.47** | **0.777** | **0.149** |
 
 ### Single-degradation tasks
-
-![Single degradation results](assets/single_deg_qual.png)
 
 | Task | Dataset | PSNR ↑ | LPIPS ↓ |
 |---|---|---|---|
@@ -194,7 +190,7 @@ Training uses bf16 mixed precision with gradient accumulation over 16 steps and 
 
 ## Architecture Overview
 
-![UniCoRN architecture](assets/architecture.png)
+![UniCoRN architecture](assets/overview_figure.png)
 
 UniCoRN extends ControlNet with four components:
 
@@ -211,8 +207,6 @@ MetaRestore is a real-world multi-degradation dataset captured with a metalens c
 
 - **Training split:** 800 Div2K images captured under controlled exposure, white balance, and contrast settings
 - **Evaluation split:** 400 images from a held-out source set
-
-![MetaRestore setup](assets/metarestore_setup.png)
 
 ---
 
