@@ -21,6 +21,7 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
   <style>
     /* ── Custom image carousel ── */
@@ -193,6 +194,24 @@
 
 <section class="section">
   <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Presentation Video</h2>
+        <div class="publication-video" style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.15);">
+          <iframe src="https://www.youtube.com/embed/S6SKtuF1ZhY"
+                  style="position:absolute; top:0; left:0; width:100%; height:100%;"
+                  frameborder="0"
+                  allow="autoplay; encrypted-media"
+                  allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Method Overview</h2>
     <div class="content has-text-centered">
       <img src="./static/images/unicorn_assets/overview_figure.png" alt="UniCoRN architecture overview" style="width:100%;">
@@ -335,6 +354,49 @@
 </section>
 
 
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Poster</h2>
+    <div style="box-shadow:0 8px 40px rgba(0,0,0,0.18); border-radius:8px; overflow:hidden; border:1px solid #e0e0e0;">
+      <img src="./static/images/UniCoRN%20Poster.png" alt="UniCoRN WACV 2026 Poster" style="width:100%; display:block;">
+    </div>
+    <div class="has-text-centered" style="margin-top:1.2rem;">
+      <a href="./static/images/UniCoRN%20Poster.png" download class="button is-dark is-rounded">
+        <span class="icon"><i class="fas fa-download"></i></span>
+        <span>Download Poster</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" style="background-color:#f5f5f5;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Presentation Slides</h2>
+    <div style="background:#fff; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.12); overflow:hidden;">
+      <canvas id="pdf-canvas" style="width:100%; display:block;"></canvas>
+    </div>
+    <div class="has-text-centered" style="margin-top:1rem; display:flex; align-items:center; justify-content:center; gap:1rem;">
+      <button id="pdf-prev" class="button is-dark is-rounded">
+        <span class="icon"><i class="fas fa-chevron-left"></i></span>
+        <span>Prev</span>
+      </button>
+      <span id="pdf-page-info" style="font-size:1rem; font-weight:500;">Loading...</span>
+      <button id="pdf-next" class="button is-dark is-rounded">
+        <span>Next</span>
+        <span class="icon"><i class="fas fa-chevron-right"></i></span>
+      </button>
+    </div>
+    <div class="has-text-centered" style="margin-top:0.8rem;">
+      <a href="./static/images/UniCoRN%20WACV%20Talk%20Slides.pdf" download class="button is-light is-rounded is-small">
+        <span class="icon"><i class="fas fa-download"></i></span>
+        <span>Download Slides</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
@@ -359,6 +421,69 @@
     </div>
   </div>
 </footer>
+
+<script>
+  // PDF.js slide viewer
+  (function() {
+    var canvas = document.getElementById('pdf-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var pdfDoc = null, pageNum = 1, rendering = false, pending = null;
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    pdfjsLib.getDocument('./static/images/UniCoRN%20WACV%20Talk%20Slides.pdf').promise.then(function(doc) {
+      pdfDoc = doc;
+      renderPage(1);
+    });
+
+    function renderPage(num) {
+      rendering = true;
+      pdfDoc.getPage(num).then(function(page) {
+        var vp = page.getViewport({ scale: 1 });
+        var scale = canvas.parentElement.clientWidth / vp.width;
+        var scaled = page.getViewport({ scale: scale });
+        canvas.width = scaled.width;
+        canvas.height = scaled.height;
+        page.render({ canvasContext: ctx, viewport: scaled }).promise.then(function() {
+          rendering = false;
+          document.getElementById('pdf-page-info').textContent = 'Slide ' + num + ' / ' + pdfDoc.numPages;
+          if (pending !== null) { var n = pending; pending = null; renderPage(n); }
+        });
+      });
+    }
+
+    function go(n) {
+      n = Math.max(1, Math.min(n, pdfDoc ? pdfDoc.numPages : 1));
+      if (n === pageNum) return;
+      pageNum = n;
+      if (rendering) { pending = n; } else { renderPage(n); }
+    }
+
+    document.getElementById('pdf-prev').addEventListener('click', function() { go(pageNum - 1); });
+    document.getElementById('pdf-next').addEventListener('click', function() { go(pageNum + 1); });
+  })();
+</script>
+
+<script>
+  document.querySelectorAll('.unicorn-carousel').forEach(function(carousel) {
+    var track = carousel.querySelector('.unicorn-carousel-track');
+    var slides = Array.from(carousel.querySelectorAll('.unicorn-carousel-slide'));
+    var dots = Array.from(carousel.querySelectorAll('.unicorn-dot'));
+    var current = 0;
+
+    function goTo(n) {
+      current = ((n % slides.length) + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+    }
+
+    carousel.querySelector('.unicorn-prev').addEventListener('click', function() { goTo(current - 1); });
+    carousel.querySelector('.unicorn-next').addEventListener('click', function() { goTo(current + 1); });
+    dots.forEach(function(d, i) { d.addEventListener('click', function() { goTo(i); }); });
+  });
+</script>
 
 </body>
 </html>

@@ -41,25 +41,6 @@ $(document).ready(function() {
 		// Initialize all div with carousel class
     var carousels = bulmaCarousel.attach('.carousel', options);
 
-    // Custom single-slide carousels with dot pagination
-    document.querySelectorAll('.unicorn-carousel').forEach(function(carousel) {
-      var track = carousel.querySelector('.unicorn-carousel-track');
-      var slides = Array.from(carousel.querySelectorAll('.unicorn-carousel-slide'));
-      var dots = Array.from(carousel.querySelectorAll('.unicorn-dot'));
-      var current = 0;
-
-      function goTo(n) {
-        current = ((n % slides.length) + slides.length) % slides.length;
-        track.style.transform = 'translateX(-' + current * 100 + '%)';
-        dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
-      }
-
-      var prevBtn = carousel.querySelector('.unicorn-prev');
-      var nextBtn = carousel.querySelector('.unicorn-next');
-      if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); });
-      if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); });
-      dots.forEach(function(d, i) { d.addEventListener('click', function() { goTo(i); }); });
-    });
 
     /*var player = document.getElementById('interpolation-video');
     player.addEventListener('loadedmetadata', function() {
